@@ -1,0 +1,36 @@
+{% load static %}
+<html>
+    <head>
+        <title>YouTube Videos Downloader</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <header class="header">
+            <a id="header"href="/">YouTube Video Downloader</a>
+        </header>
+        <div class="container">
+            <div class="download-option">
+                <form method="post">
+                    {% csrf_token %}
+                    <a class = "download-playlist" href="/playlist_link.html">Download Playlist</a>
+                    <a class = "download-video" href="/video_link.html">Download Video</a>
+                </form>
+            </div>
+            {% block video-playlist %}
+
+            {% endblock %}
+
+            {% block message %}
+
+            {% endblock %}
+
+            {% block download %}
+
+            {% endblock %}
+            
+        </div>
+        <footer>
+            Copyright &copy; 2023, YouTube Video Downloader. All rights reserved.<br />
+        </footer>
+    </body>
+</html>

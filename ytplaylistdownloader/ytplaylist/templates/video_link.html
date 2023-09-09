@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block video-playlist %}
+
+
+<div class="links">
+    <form method="post" class="form">
+        {% csrf_token %}
+        <input type="text" name="url" placeholder="Video link">
+        <button type="submit" name="video-link" value="video-link">Download</button>
+    </form>
+</div>
+
+{% endblock %}

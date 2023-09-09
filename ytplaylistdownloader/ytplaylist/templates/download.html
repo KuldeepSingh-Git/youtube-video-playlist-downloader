@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block download %}
+
+
+{% if data %}
+            {% if data.message %}
+                {{ data.message }}
+            {% endif %}
+            <div class="discription">
+                <div class="details">
+                    <div class="thumbnail">
+                        <img src="{{data.thumbnail_url}}" alt="{{ data.title }}">
+                    </div>
+                    <div class="video-detail">
+                        <div class="title">
+                            {{ data.title }}
+                        </div>
+                        <div class="channel">
+                            {{ data.channel }}
+                        </div>
+                        {% if data.count %}
+                        <div class="total-videos">
+                            {{ data.count }} videos in playlist
+                        </div>
+                        {% endif %}
+                        <div class="options">
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="download" value="audio">audio {{ data.audio_size }}Mb</button>
+                                {% for x in data.stream %}
+                                    <button type="submit" name="download" value="{{ forloop.counter }}">{{x.resolution}}</button>|
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+{% endblock %}
