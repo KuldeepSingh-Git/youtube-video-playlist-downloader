@@ -15,6 +15,7 @@ def playlist(request):
             global link
             link = request.POST.get('url')
             if 'www.youtube.com/playlist' in link:
+                global yt
                 yt = Playlist(link)
                 platlist_title = yt.title
                 playlist_owner = yt.owner
@@ -22,7 +23,7 @@ def playlist(request):
                 total_audio_size = 0
                 qual,stream = [],[]
                 for vid in YouTube(yt[0]).streams.filter(progressive=True):
-                    # qual.append(vid.resolution)
+                    qual.append(vid.resolution)
                     stream.append(vid)
                 for vid in yt:
                     video = YouTube(vid)
@@ -34,7 +35,7 @@ def playlist(request):
                 data = {    'title' : platlist_title,
                             'thumbnail_url' : playlist_thumbnail,
                             'channel' : playlist_owner,
-                            # 'qual' : qual,
+                            'qual' : qual,
                             'stream' : stream,
                             'count' : count,
                             'audio_size' : total_audio_size,
@@ -63,16 +64,17 @@ def playlist(request):
                             context = {
                                 'message' : 'Sorry, something went wrong... please try again'
                             }
-                        return render(request,'message.html',context)
+                            return render(request,'message.html',context)
                     return render(request,'download.html',context)
                 
                 else:
-                    for vid in Playlist(link):
+                    for i,vid in enumerate(Playlist(link)):
                         try:
                             video = YouTube(vid)
-                            # stream = [x for x in video.streams.filter(progressive=True)]
+                            stream = [x for x in video.streams.filter(progressive=True)]
                             video_qual = video.streams[int(request.POST['download']) - 1]
-                            video_qual.download(output_path='Downloads',filename=f'{video.title} {video_qual.resolution}.mp4')
+                            title = video.title.replace('|','').replace('\\','').replace('?','').replace('/','').replace('>','').replace('<','').replace('"','').replace('*','').replace(':','')
+                            video_qual.download(output_path='Downloads',filename=f'Video {i+1} {title} {video_qual.resolution}.mp4')
                         
                         except Exception:
                             pass
