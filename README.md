@@ -20,7 +20,7 @@ Before you can use this project, you'll need to have the following prerequisites
 
 1. Start the Django development server in the project directory on terminal:
       python manage.py runserver
-2. Open your web browser and go to http://localhost:8000 to access the application.
+2. Open your web browser and go to http://127.0.0.1:8000/ to access the application.
 3. Enter a valid YouTube video or playlist URL in the input field.
 4. Click the "Download" button to retrieve information about the video or playlist.
 5. Once the information is displayed, you can click on the desired video quality or format (if available) to initiate the download process.
